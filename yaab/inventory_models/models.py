@@ -89,10 +89,26 @@ def output_to_csv(products: List[YaabProduct]):
                         str(product.description),
                         str(product.colors),
                         str(product.ai_description),
-                        str(getattr(product.dimensions, "width", "") if product.dimensions else ""),
-                        str(getattr(product.dimensions, "length", "") if product.dimensions else ""),
-                        str(getattr(product.dimensions, "depth", "") if product.dimensions else ""),
-                        str(getattr(product.dimensions, "units", "") if product.dimensions else ""),
+                        str(
+                            getattr(product.dimensions, "width", "")
+                            if product.dimensions
+                            else ""
+                        ),
+                        str(
+                            getattr(product.dimensions, "length", "")
+                            if product.dimensions
+                            else ""
+                        ),
+                        str(
+                            getattr(product.dimensions, "depth", "")
+                            if product.dimensions
+                            else ""
+                        ),
+                        str(
+                            getattr(product.dimensions, "units", "")
+                            if product.dimensions
+                            else ""
+                        ),
                     ]
                 ]
                 writer.writerows(product_data)
