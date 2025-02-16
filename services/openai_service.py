@@ -25,7 +25,7 @@ class OpenAIService:
             messages=[
                 {
                     "role": "system",
-                    "content": "Estás encargado de buscar descripciones cortas e informativas sobre productos en línea. Vas a recibir el nombre de un producto, ademas del texto que incluye una página web con información sobre el mismo, y tu trabajo es devolver una descripción de máximo 256 palábras sobre el producto.",
+                    "content": "Estás encargado de buscar descripciones cortas e informativas sobre productos en línea. Vas a recibir el nombre de un producto, ademas del texto que incluye una página web con información sobre el mismo, y tu trabajo es devolver una descripción de máximo 512 palabras sobre el producto. Ademas deberas encontrar las dimensiones del producto si las encuentras y especificar en que unidad estan.",
                 },
                 {
                     "role": "user",
