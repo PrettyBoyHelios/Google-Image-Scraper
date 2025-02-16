@@ -68,30 +68,34 @@ headers = [
 
 
 def output_to_csv(products: List[YaabProduct]):
-    output_path = join("output", "yaab.csv")
-    if not exists(output_path):
-        with open(output_path, "w", newline="\n") as csvfile:
+    try:
+        output_path = join("output", "yaab.csv")
+        if not exists(output_path):
+            with open(output_path, "w", newline="\n") as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerows(headers)
+        with open(output_path, "a", newline="\n") as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerows(headers)
-    with open(output_path, "a", newline="\n") as csvfile:
-        writer = csv.writer(csvfile)
-        for product in products:
-            product_data = [
-                [
-                    product.sku,
-                    product.name,
-                    product.category,
-                    product.min_price,
-                    product.price,
-                    product.stock,
-                    product.status,
-                    product.description,
-                    product.colors,
-                    product.ai_description,
-                    product.dimensions.width,
-                    product.dimensions.length,
-                    product.dimensions.depth,
-                    product.dimensions.units,
+            for product in products:
+                product_data = [
+                    [
+                        str(product.sku),
+                        str(product.name),
+                        str(product.category),
+                        str(product.min_price),
+                        str(product.price),
+                        str(product.stock),
+                        str(product.status),
+                        str(product.description),
+                        str(product.colors),
+                        str(product.ai_description),
+                        str(getattr(product.dimensions, "width", "") if product.dimensions else ""),
+                        str(getattr(product.dimensions, "length", "") if product.dimensions else ""),
+                        str(getattr(product.dimensions, "depth", "") if product.dimensions else ""),
+                        str(getattr(product.dimensions, "units", "") if product.dimensions else ""),
+                    ]
                 ]
-            ]
-            writer.writerows(product_data)
+                writer.writerows(product_data)
+    except Exception as e:
+        print(e)
+        raise e

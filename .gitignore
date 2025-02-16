@@ -20,3 +20,4 @@ descriptions/*
 services/__pycache__/*
 photos.zip
 descriptions.zip
+output/yaab.csv

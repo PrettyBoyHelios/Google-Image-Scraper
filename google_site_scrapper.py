@@ -169,16 +169,16 @@ class GoogleAISiteScrapper:
                         "Nombre del artículo",
                         "AI Description",
                     )
-                else:
-                    output_path = join(self.description_path, "description.txt")
-                    with open(
-                        join(self.description_path, "description.txt"),
-                        "w",
-                        encoding="utf8",
-                    ) as f:
-                        f.write(description.description)
-                    print(f"description written to {output_path}")
-                    self.product.dimensions = description.dimensions
-                    self.product.ai_description = description.description
-                    output_to_csv([self.product])
+
+                output_path = join(self.description_path, "description.txt")
+                with open(
+                    join(self.description_path, "description.txt"),
+                    "w",
+                    encoding="utf8",
+                ) as f:
+                    f.write(description.description)
+                print(f"description written to {output_path}")
+                self.product.dimensions = description.dimensions
+                self.product.ai_description = description.description
+                output_to_csv([self.product])
                 return description
