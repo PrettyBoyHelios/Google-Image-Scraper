@@ -4,21 +4,19 @@ from typing import Optional
 
 import patch
 import re
-import time
 from os.path import join
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import (
-    NoSuchElementException,
-    ElementClickInterceptedException,
-)
+
 import logging
 from bs4 import BeautifulSoup
 
 from services.gspread_service import GoogleSheetsService
 from services.openai_service import OpenAIService
+from yaab.inventory_models.models import YaabProduct, output_to_csv
+import json
 
 
 class GoogleAISiteScrapper:
@@ -27,6 +25,7 @@ class GoogleAISiteScrapper:
         webdriver_path,
         description_path,
         sku,
+        product,
         search_key="",
         number_of_results=1,
         headless=True,
@@ -102,6 +101,7 @@ class GoogleAISiteScrapper:
         self.description_path = output_path
         self.url = "https://www.google.com/search?q={}".format(search_key)
         self.headless = headless
+        self.product: YaabProduct = product
 
     def find_product_description(
         self,
@@ -161,15 +161,21 @@ class GoogleAISiteScrapper:
                 if google_sheets_service:
                     google_sheets_service.update_description(
                         self.search_key,
-                        description,
+                        description.description,
                         "Nombre del artículo",
                         "AI Description",
                     )
-                else:
-                    with open(
-                        join(self.description_path, "description.txt"),
-                        "w",
-                        encoding="utf8",
-                    ) as f:
-                        f.write(description)
+                description.url = self.url
+                output_path = join(self.description_path, "description.json")
+                with open(
+                    join(self.description_path, "description.json"),
+                    "w",
+                    encoding="utf8",
+                ) as f:
+                    json_str = description.model_dump_json(indent=4)
+                    f.write(json_str)
+                print(f"description written to {output_path}")
+                self.product.dimensions = description.dimensions
+                self.product.ai_description = description.description
+                output_to_csv([self.product])
                 return description

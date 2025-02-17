@@ -19,3 +19,6 @@ webdriver/THIRD_PARTY_NOTICES.chromedriver
 descriptions/*
 services/__pycache__/*
 photos.zip
+descriptions.zip
+output/yaab.csv
+*.pyc

@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from os import getenv
 
+from utils.utils import load_prompt, Prompt
 from yaab.gpt_models.models import GPTDescriptionResponse
 
 
@@ -21,11 +22,12 @@ class OpenAIService:
         :param website_content:
         :return:
         """
+        prompt = load_prompt(Prompt.INFO_DESCRIPCION)
         chat_completion = self.client.beta.chat.completions.parse(
             messages=[
                 {
                     "role": "system",
-                    "content": "Estás encargado de buscar descripciones cortas e informativas sobre productos en línea. Vas a recibir el nombre de un producto, ademas del texto que incluye una página web con información sobre el mismo, y tu trabajo es devolver una descripción de máximo 256 palábras sobre el producto.",
+                    "content": prompt,
                 },
                 {
                     "role": "user",
