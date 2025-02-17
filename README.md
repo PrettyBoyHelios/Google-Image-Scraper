@@ -40,7 +40,22 @@ uv run python main.py
 ```
 ## Yaab Instructions
 1. Descargar
+2. Para buscar descripciones e información de precio
+```
+uv run python main.py
+```
+3. Para descargar 5 imágenes por producto
+```
+uv run python images.py -q 5
+```
 
 # Consideraciones
 El archivo que contiene la información de entrada de los productos tiene que tener las siguientes columnas.
 - SKU: ID o SKU del producto, tiene que coincidir con las especificaciones de Lions Intel para la cargar masiva de imágenes.
+- Nombre de Producto
+
+# Precaución!
+Hay un par de cosas que podrían faltar para hacer que el script funcionara 1:1 con la carga masiva de productos con csv. Sólo sería cuestion de verificar que estamos mandando toda la información requerida y en el orden esperado.
+Además sería cuestión de 
+
+Configurar gspread credentials!

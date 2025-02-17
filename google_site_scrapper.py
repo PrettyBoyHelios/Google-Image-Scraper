@@ -1,26 +1,22 @@
 import os
 import sys
-from itertools import product
 from typing import Optional
 
 import patch
 import re
-import time
 from os.path import join
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import (
-    NoSuchElementException,
-    ElementClickInterceptedException,
-)
+
 import logging
 from bs4 import BeautifulSoup
 
 from services.gspread_service import GoogleSheetsService
 from services.openai_service import OpenAIService
 from yaab.inventory_models.models import YaabProduct, output_to_csv
+import json
 
 
 class GoogleAISiteScrapper:
@@ -169,14 +165,15 @@ class GoogleAISiteScrapper:
                         "Nombre del artículo",
                         "AI Description",
                     )
-
-                output_path = join(self.description_path, "description.txt")
+                description.url = self.url
+                output_path = join(self.description_path, "description.json")
                 with open(
-                    join(self.description_path, "description.txt"),
+                    join(self.description_path, "description.json"),
                     "w",
                     encoding="utf8",
                 ) as f:
-                    f.write(description.description)
+                    json_str = description.model_dump_json(indent=4)
+                    f.write(json_str)
                 print(f"description written to {output_path}")
                 self.product.dimensions = description.dimensions
                 self.product.ai_description = description.description

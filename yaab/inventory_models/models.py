@@ -62,7 +62,9 @@ headers = [
         "Width",
         "Length",
         "Depth",
-        "Units",
+        "Unit",
+        "Weight",
+        "WeightUnit"
     ]
 ]
 
@@ -106,6 +108,16 @@ def output_to_csv(products: List[YaabProduct]):
                         ),
                         str(
                             getattr(product.dimensions, "units", "")
+                            if product.dimensions
+                            else ""
+                        ),
+                        str(
+                            getattr(product.dimensions, "weight", "")
+                            if product.dimensions
+                            else ""
+                        ),
+                        str(
+                            getattr(product.dimensions, "weight_units", "")
                             if product.dimensions
                             else ""
                         ),
