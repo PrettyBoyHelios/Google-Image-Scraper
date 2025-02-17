@@ -1,7 +1,5 @@
 # Google Image Scraper
-A library created to scrape Google Images.<br>
-If you are looking for other image scrapers, JJLimmm has created image scrapers for Gettyimages, Shutterstock, and Bing. <br>
-Visit their repo here: https://github.com/JJLimmm/Website-Image-Scraper
+A library created to scrape product images and information from Google Images and Search, using openai GPT 4o-mini.
 
 ## Pre-requisites
 1. Google Chrome or Brave Browser Installed in default paths
@@ -56,6 +54,6 @@ El archivo que contiene la información de entrada de los productos tiene que te
 
 # Precaución!
 Hay un par de cosas que podrían faltar para hacer que el script funcionara 1:1 con la carga masiva de productos con csv. Sólo sería cuestion de verificar que estamos mandando toda la información requerida y en el orden esperado.
-Además sería cuestión de 
-
-Configurar gspread credentials!
+Además sería cuestión de configurar lo siguiente
+* API KEY de OpenAI en .env
+* service_account.json de google  en ./.config/gspread/
